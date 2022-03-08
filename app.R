@@ -3,7 +3,7 @@ library(dashBootstrapComponents)
 # library(dashHtmlComponents)
 library(ggplot2)
 library(plotly)
-# library(tidyverse)
+library(readr)
 
 app <-
   Dash$new(external_stylesheets = dbcThemes$BOOTSTRAP)
@@ -112,7 +112,7 @@ app$callback(output('bar-plot-1', 'figure'),
                if (crime_category == "All") {
                  p <- crime %>%
                    filter(NEIGHBOURHOOD == neighbourhood)  %>%
-                   add_count(TYPE)  %>%
+                   dplyr::add_count(TYPE)  %>%
                    ggplot(aes(y = reorder(TYPE, n), text = n)) +
                    geom_bar(fill = '#aec7e8') +
                    ggtitle(paste("Total Reported Cases by Crime Types in", neighbourhood)) +
@@ -134,7 +134,7 @@ app$callback(output('bar-plot-1', 'figure'),
                  p <- crime  %>%
                    filter(NEIGHBOURHOOD == neighbourhood &
                             CRIME_CATEGORY == crime_category)  %>%
-                   add_count(TYPE)  %>%
+                   dplyr::add_count(TYPE)  %>%
                    ggplot(aes(y = reorder(TYPE, n), text = n)) +
                    geom_bar(fill = '#aec7e8') +
                    ggtitle(paste(
